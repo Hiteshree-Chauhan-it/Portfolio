@@ -1,0 +1,131 @@
+/* ============================================
+   Contact.css
+   ============================================ */
+
+.contact {
+  background: var(--color-bg-alt);
+}
+
+/* Grid: left info + right form */
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+/* ---- LEFT SIDE ---- */
+.contact__intro {
+  color: var(--color-text-muted);
+  margin: var(--space-sm) 0 var(--space-md);
+  line-height: 1.7;
+}
+
+/* Info cards */
+.contact__info-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.contact__info-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+}
+
+.contact__info-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.contact__info-icon {
+  font-size: 1.3rem;
+}
+
+.contact__info-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.contact__info-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* ---- RIGHT SIDE (FORM) ---- */
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Field group */
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.contact__label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+/* Input + textarea */
+.contact__input {
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  font-size: 0.9rem;
+  color: var(--color-text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.contact__input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(232, 130, 90, 0.15);
+}
+
+.contact__textarea {
+  resize: none;
+}
+
+/* Submit button */
+.contact__submit {
+  margin-top: var(--space-xs);
+}
+
+/* ---- SUCCESS STATE ---- */
+.contact__success {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.contact__success-icon {
+  font-size: 2rem;
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 768px) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+  }
+}

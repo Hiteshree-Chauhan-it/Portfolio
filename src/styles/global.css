@@ -1,0 +1,210 @@
+/* ============================================
+   GLOBAL STYLES — global.css
+   All CSS variables + resets live here.
+   Edit the :root variables to change the
+   entire site's color theme instantly.
+   ============================================ */
+
+/* ---------- CSS VARIABLES (Light Mode) ---------- */
+:root {
+  /* Colors */
+  --color-bg:         #FAFAF8;      /* Warm off-white background */
+  --color-bg-alt:     #F0EDE6;      /* Slightly darker card bg */
+  --color-text:       #1A1A2E;      /* Deep navy text */
+  --color-text-muted: #6B6B7B;      /* Muted grey for secondary text */
+  --color-accent:     #E8825A;      /* Warm coral accent */
+  --color-accent-dark:#C86A44;      /* Darker coral for hover states */
+  --color-border:     #E0DDD6;      /* Subtle border */
+  --color-white:      #FFFFFF;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  /* Spacing */
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  2rem;
+  --space-lg:  4rem;
+  --space-xl:  8rem;
+
+  /* Borders */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(26,26,46,0.06);
+  --shadow-md: 0 8px 32px rgba(26,26,46,0.10);
+  --shadow-lg: 0 16px 48px rgba(26,26,46,0.14);
+
+  /* Transitions */
+  --transition: 0.3s ease;
+
+  /* Navbar height — used for scroll offset */
+  --navbar-height: 70px;
+}
+
+/* ---------- CSS VARIABLES (Dark Mode) ---------- */
+[data-theme="dark"] {
+  --color-bg:         #0F1117;
+  --color-bg-alt:     #1A1B26;
+  --color-text:       #F0EDE6;
+  --color-text-muted: #9A9AAA;
+  --color-accent:     #E8825A;
+  --color-accent-dark:#F0976E;
+  --color-border:     #2A2B3A;
+  --color-white:      #1A1B26;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.3);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.4);
+}
+
+/* ---------- RESET ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--navbar-height);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
+  font-size: 1rem;
+  transition: background-color var(--transition), color var(--transition);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+}
+
+/* ---------- REUSABLE SECTION STYLES ---------- */
+.section {
+  padding: var(--space-lg) var(--space-md);
+}
+
+.section__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Section heading block used in every section */
+.section__tag {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-xs);
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+  line-height: 1.2;
+}
+
+.section__subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  max-width: 600px;
+  margin-bottom: var(--space-md);
+}
+
+/* ---------- REUSABLE BUTTON ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--color-accent-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-text);
+  border: 1.5px solid var(--color-border);
+}
+
+.btn--outline:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+/* ---------- FADE-IN ANIMATION ---------- */
+/* Applied via JS IntersectionObserver to animate sections in */
+.fade-in {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children — each child animates with a small delay */
+.fade-in-child {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-child.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- RESPONSIVE HELPERS ---------- */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-md) var(--space-sm);
+  }
+}

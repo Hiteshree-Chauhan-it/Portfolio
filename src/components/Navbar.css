@@ -1,0 +1,202 @@
+/* ============================================
+   Navbar.css
+   ============================================ */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--navbar-height);
+  background: transparent;
+  transition: background var(--transition), box-shadow var(--transition), backdrop-filter var(--transition);
+}
+
+/* Scrolled state: frosted glass effect */
+.navbar--scrolled {
+  background: rgba(var(--color-bg-rgb, 250, 250, 248), 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .navbar--scrolled {
+  background: rgba(15, 17, 23, 0.85);
+}
+
+.navbar__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+/* Logo */
+.navbar__logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  transition: color var(--transition);
+}
+
+.navbar__logo span {
+  color: var(--color-accent);
+}
+
+.navbar__logo:hover {
+  color: var(--color-accent);
+}
+
+/* Nav links (desktop) */
+.navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.navbar__link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  position: relative;
+  transition: color var(--transition);
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 2px;
+  transition: width var(--transition);
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--color-text);
+}
+
+.navbar__link:hover::after,
+.navbar__link--active::after {
+  width: 100%;
+}
+
+/* Resume button in desktop nav */
+.navbar__resume {
+  display: none; /* hidden on desktop nav; shown in actions */
+  font-size: 0.85rem;
+  padding: 0.6rem 1.4rem;
+}
+
+.navbar__resume--desktop {
+  font-size: 0.85rem;
+  padding: 0.6rem 1.4rem;
+}
+
+/* Right-side actions */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* Theme toggle button */
+.navbar__theme-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.navbar__theme-btn:hover {
+  border-color: var(--color-accent);
+  background: var(--color-bg-alt);
+}
+
+/* Hamburger button */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.navbar__hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/* Hamburger → X animation */
+.navbar__hamburger--open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.navbar__hamburger--open span:nth-child(2) {
+  opacity: 0;
+}
+.navbar__hamburger--open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Backdrop for mobile menu */
+.navbar__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 768px) {
+  .navbar__hamburger {
+    display: flex;
+  }
+
+  .navbar__resume--desktop {
+    display: none;
+  }
+
+  /* Mobile nav: slide down from top */
+  .navbar__nav {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-md);
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-110%);
+    opacity: 0;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+  }
+
+  .navbar__nav--open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .navbar__resume {
+    display: inline-flex;
+    margin-top: var(--space-xs);
+  }
+}

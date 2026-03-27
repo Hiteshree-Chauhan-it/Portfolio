@@ -1,0 +1,92 @@
+/* ============================================
+   Skills.css
+   ============================================ */
+
+/* Filter tabs */
+.skills__tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.skills__tab {
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  border: 1.5px solid var(--color-border);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: transparent;
+  transition: all var(--transition);
+}
+
+.skills__tab:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.skills__tab--active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* Two-column grid for skill bars */
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md) var(--space-lg);
+}
+
+/* ---- Individual Skill Bar ---- */
+.skill-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skill-bar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skill-bar__name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.skill-bar__level {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+/* Bar track (background) */
+.skill-bar__track {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+/* Bar fill — width animated via JS */
+.skill-bar__fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent) 0%,
+    var(--color-accent-dark) 100%
+  );
+  border-radius: 50px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 640px) {
+  .skills__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,855 @@
+/* ============================================================
+   CodingActivity.css
+   All styles for the Coding Activity section.
+
+   DESIGN CONTRACT:
+   • Uses ONLY the existing CSS custom properties from global.css
+   • BEM naming with `.ca-` prefix to prevent any collision
+   • Dark mode via [data-theme="dark"] — NOT Tailwind dark: classes
+   • Zero Tailwind classes — plain CSS throughout
+   • Matches card, tab, spacing, shadow patterns of Skills/Projects
+   ============================================================ */
+
+
+/* ──────────────────────────────────────────
+   SECTION WRAPPER
+   Follows the same pattern as .skills / .projects
+   ────────────────────────────────────────── */
+
+.ca-section {
+  background: var(--color-bg);
+}
+
+/* Section header row: title on left, username input on right */
+.ca-section__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.ca-section__heading-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ca-section__subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+}
+
+
+/* ──────────────────────────────────────────
+   TAB BAR
+   Mirrors .skills__tabs / .skills__tab exactly
+   ────────────────────────────────────────── */
+
+.ca-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.ca-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  border: 1.5px solid var(--color-border);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.ca-tab:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.ca-tab--active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.ca-tab--active:hover {
+  background: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
+  color: #fff;
+}
+
+.ca-tab__icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+
+/* ──────────────────────────────────────────
+   STAT CARDS GRID
+   4-up grid — mirrors .about__stats pattern
+   ────────────────────────────────────────── */
+
+.ca-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+/* Card — mirrors .about__stat-card */
+.ca-stat-card {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.ca-stat-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.ca-stat-card__icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+
+/* Value — same scale as .about__stat-value */
+.ca-stat-card__value {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+/* Accent colour variants for individual stats */
+.ca-stat-card__value--green  { color: #3a9e5f; }
+.ca-stat-card__value--orange { color: #e07c3c; }
+.ca-stat-card__value--yellow { color: #c9962a; }
+.ca-stat-card__value--blue   { color: #4a7fb5; }
+
+[data-theme="dark"] .ca-stat-card__value--green  { color: #4eca7f; }
+[data-theme="dark"] .ca-stat-card__value--orange { color: #f09060; }
+[data-theme="dark"] .ca-stat-card__value--yellow { color: #f0b84a; }
+[data-theme="dark"] .ca-stat-card__value--blue   { color: #6fa3d8; }
+
+.ca-stat-card__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.ca-stat-card__sub {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+/* Skeleton shimmer state */
+.ca-stat-card--loading .ca-stat-card__value {
+  display: inline-block;
+  width: 5rem;
+  height: 1.9rem;
+  background: var(--color-border);
+  border-radius: var(--radius-sm);
+  animation: ca-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes ca-shimmer {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+
+/* ──────────────────────────────────────────
+   PANEL CARD
+   Used inside each tab to wrap heatmap / rings.
+   Mirrors .project-card structure.
+   ────────────────────────────────────────── */
+
+.ca-card {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--space-md);
+}
+
+.ca-card__inner {
+  padding: var(--space-md);
+}
+
+/* Card heading row */
+.ca-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.ca-card__heading {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Small badge (e.g. "simulated") */
+.ca-card__badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+
+/* ──────────────────────────────────────────
+   USERNAME INPUT
+   Inline form with a chip display when set.
+   Follows .contact__input / .contact__label style.
+   ────────────────────────────────────────── */
+
+.ca-username { }
+
+.ca-username__form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Wrapper for the "@" prefix + input */
+.ca-username__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ca-username__at {
+  position: absolute;
+  left: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  font-family: var(--font-body);
+}
+
+.ca-username__input {
+  padding: 0.55rem 0.75rem 0.55rem 1.65rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  width: 170px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.ca-username__input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.55;
+}
+
+.ca-username__input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(232, 130, 90, 0.12);
+}
+
+/* "Load" button — compact outline style */
+.ca-username__btn {
+  padding: 0.55rem 1.1rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
+  background: transparent;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.ca-username__btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.ca-username__btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+}
+
+/* Read-only chip shown after username is saved */
+.ca-username__display {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.ca-username__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Spinner inside chip while loading */
+.ca-username__spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: ca-spin 0.7s linear infinite;
+}
+
+@keyframes ca-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* "mock data" amber badge */
+.ca-username__mock {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  background: rgba(232, 180, 90, 0.15);
+  color: #b07d20;
+  border: 1px solid rgba(232, 180, 90, 0.3);
+}
+
+[data-theme="dark"] .ca-username__mock {
+  background: rgba(232, 180, 90, 0.1);
+  color: #d4a840;
+  border-color: rgba(232, 180, 90, 0.2);
+}
+
+/* "change" / "clear" text links */
+.ca-username__action {
+  font-size: 0.78rem;
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 0;
+  transition: color var(--transition);
+}
+
+.ca-username__action:hover {
+  color: var(--color-accent);
+}
+
+.ca-username__action--danger:hover {
+  color: #c0392b;
+}
+
+/* Inline error */
+.ca-username__error {
+  font-size: 0.78rem;
+  color: #c0392b;
+  margin-top: 0.3rem;
+  font-family: var(--font-body);
+}
+
+[data-theme="dark"] .ca-username__error {
+  color: #e57373;
+}
+
+
+/* ──────────────────────────────────────────
+   CONTRIBUTION HEATMAP
+   ────────────────────────────────────────── */
+
+/* Scroll wrapper for mobile */
+.ca-heatmap {
+  overflow-x: auto;
+  padding-bottom: var(--space-xs);
+  position: relative;
+
+  /* GitHub green palette — light */
+  --hm-0: #ebedf0;
+  --hm-1: #9be9a8;
+  --hm-2: #40c463;
+  --hm-3: #30a14e;
+  --hm-4: #216e39;
+}
+
+[data-theme="dark"] .ca-heatmap {
+  /* GitHub green palette — dark */
+  --hm-0: #21262d;
+  --hm-1: #0e4429;
+  --hm-2: #006d32;
+  --hm-3: #26a641;
+  --hm-4: #39d353;
+}
+
+/* LeetCode amber variant */
+.ca-heatmap--leetcode {
+  --hm-0: #d1d5db;
+--hm-1: #fcd34d;
+--hm-2: #d97706;
+--hm-3: #b45309;
+--hm-4: #78350f;
+}
+
+[data-theme="dark"] .ca-heatmap--leetcode {
+  --hm-0: #2d2a24;
+  --hm-1: #78350f;
+  --hm-2: #d97706;
+  --hm-3: #f59e0b;
+  --hm-4: #fcd34d;
+}
+
+.ca-heatmap__inner {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: max-content;
+}
+
+/* Month labels row */
+.ca-heatmap__months {
+  position: relative;
+  height: 18px;
+  padding-left: 28px;
+  margin-bottom: 4px;
+}
+
+.ca-heatmap__month-label {
+  position: absolute;
+  font-size: 10px;
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  line-height: 1;
+}
+
+/* Main grid row: day-of-week labels + week columns */
+.ca-heatmap__grid {
+  display: flex;
+  gap: 0;
+}
+
+/* Day-of-week label column */
+.ca-heatmap__dow-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-right: 4px;
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.ca-heatmap__dow-label {
+  height: 12px;
+  font-size: 10px;
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+/* Week columns */
+.ca-heatmap__weeks {
+  display: flex;
+  gap: 3px;
+}
+
+.ca-heatmap__week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* Individual day cell */
+.ca-heatmap__day {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  cursor: default;
+  transition: opacity 0.1s;
+  background: var(--hm-0);
+}
+
+.ca-heatmap__day--empty {
+  background: transparent;
+}
+
+.ca-heatmap__day--today {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+/* Level-based colors via data attribute */
+.ca-heatmap__day[data-level="0"] { background: var(--hm-0); }
+.ca-heatmap__day[data-level="1"] { background: var(--hm-1); }
+.ca-heatmap__day[data-level="2"] { background: var(--hm-2); }
+.ca-heatmap__day[data-level="3"] { background: var(--hm-3); }
+.ca-heatmap__day[data-level="4"] { background: var(--hm-4); }
+
+/* Legend */
+.ca-heatmap__legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+  justify-content: flex-end;
+}
+
+.ca-heatmap__legend-label {
+  font-size: 10px;
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+}
+
+.ca-heatmap__legend-cell {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+}
+
+.ca-heatmap__legend-cell[data-level="0"] { background: var(--hm-0); }
+.ca-heatmap__legend-cell[data-level="1"] { background: var(--hm-1); }
+.ca-heatmap__legend-cell[data-level="2"] { background: var(--hm-2); }
+.ca-heatmap__legend-cell[data-level="3"] { background: var(--hm-3); }
+.ca-heatmap__legend-cell[data-level="4"] { background: var(--hm-4); }
+
+/* Floating tooltip */
+.ca-heatmap__tooltip {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  padding: 0.3rem 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-bg);
+  background: var(--color-text);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  box-shadow: var(--shadow-md);
+}
+
+/* Skeleton loading state */
+.ca-heatmap--loading .ca-heatmap__day {
+  animation: ca-shimmer 1.4s ease-in-out infinite;
+}
+
+
+/* ──────────────────────────────────────────
+   RECENT ACTIVITY BAR CHART
+   14-day bar chart below the heatmap
+   ────────────────────────────────────────── */
+
+.ca-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 60px;
+}
+
+.ca-bars__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  height: 100%;
+}
+
+.ca-bars__bar-wrap {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  height: 48px;
+}
+
+.ca-bars__bar {
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  min-height: 3px;
+  transition: background var(--transition);
+}
+
+.ca-bars__bar--github {
+  background: rgba(48, 161, 78, 0.55);
+}
+
+.ca-bars__bar--github:hover {
+  background: #30a14e;
+}
+
+[data-theme="dark"] .ca-bars__bar--github {
+  background: rgba(38, 166, 65, 0.45);
+}
+
+[data-theme="dark"] .ca-bars__bar--github:hover {
+  background: #39d353;
+}
+
+.ca-bars__bar--empty {
+  background: var(--color-border);
+  opacity: 0.4;
+}
+
+.ca-bars__date {
+  font-size: 9px;
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  opacity: 0.7;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Skeleton loading bars */
+.ca-bars__bar--skeleton {
+  background: var(--color-border);
+  animation: ca-shimmer 1.4s ease-in-out infinite;
+  border-radius: 3px 3px 0 0;
+}
+
+
+/* ──────────────────────────────────────────
+   DIFFICULTY RINGS (LeetCode)
+   ────────────────────────────────────────── */
+
+.ca-rings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Top area: rings side by side */
+.ca-rings__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+/* Single ring + label */
+.ca-rings__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ca-rings__svg-wrap {
+  position: relative;
+}
+
+/* Center text overlaid on the SVG */
+.ca-rings__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ca-rings__solved {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ca-rings__total {
+  font-size: 0.7rem;
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  line-height: 1;
+  margin-top: 1px;
+}
+
+.ca-rings__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+}
+
+/* Horizontal bar breakdown (right of rings) */
+.ca-rings__bars {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.ca-rings__bar-row {}
+
+.ca-rings__bar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.ca-rings__bar-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ca-rings__bar-count {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+}
+
+.ca-rings__bar-track {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.ca-rings__bar-fill {
+  height: 100%;
+  border-radius: 50px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Difficulty colours */
+.ca-rings__bar-fill--easy   { background: #3a9e5f; }
+.ca-rings__bar-fill--medium { background: #d4902a; }
+.ca-rings__bar-fill--hard   { background: #c0392b; }
+[data-theme="dark"] .ca-rings__bar-fill--easy   { background: #4eca7f; }
+[data-theme="dark"] .ca-rings__bar-fill--medium { background: #f0b050; }
+[data-theme="dark"] .ca-rings__bar-fill--hard   { background: #e57373; }
+
+/* Ring colours in SVG (applied as fill/stroke via component) */
+/* These are referenced as JS constants in DifficultyRings.jsx */
+
+/* Skeleton state for rings */
+.ca-rings__skeleton {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.ca-rings__skeleton-ring {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--color-border);
+  animation: ca-shimmer 1.4s ease-in-out infinite;
+}
+
+
+/* ──────────────────────────────────────────
+   PANEL HEADER ROW
+   Shared header pattern for GitHub + LeetCode panels
+   ────────────────────────────────────────── */
+
+.ca-panel__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.ca-panel__icon-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.ca-panel__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ca-panel__desc {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+}
+
+
+/* ──────────────────────────────────────────
+   RESPONSIVE BREAKPOINTS
+   ────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .ca-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .ca-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ca-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ca-rings__row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ca-rings__bars {
+    width: 100%;
+  }
+
+  .ca-bars__date {
+    display: none; /* hide tiny date labels on very small screens */
+  }
+}

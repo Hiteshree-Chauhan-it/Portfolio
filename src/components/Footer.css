@@ -1,0 +1,94 @@
+/* ============================================
+   Footer.css
+   ============================================ */
+
+.footer {
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-lg) 0;
+}
+
+/* Top row */
+.footer__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* Logo */
+.footer__logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.footer__logo span {
+  color: var(--color-accent);
+}
+
+/* Nav */
+.footer__nav {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.footer__link {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  transition: color var(--transition);
+}
+
+.footer__link:hover {
+  color: var(--color-accent);
+}
+
+/* Divider */
+.footer__divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--space-md) 0;
+}
+
+/* Bottom row */
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.footer__copy {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* Social links */
+.footer__socials {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.footer__social-link {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  transition: color var(--transition);
+}
+
+.footer__social-link:hover {
+  color: var(--color-accent);
+}
+
+/* ---- MOBILE ---- */
+@media (max-width: 768px) {
+  .footer__top,
+  .footer__bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
