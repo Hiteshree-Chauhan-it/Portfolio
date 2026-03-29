@@ -85,10 +85,55 @@
 
 /* ---- MOBILE ---- */
 @media (max-width: 768px) {
+  /* FIX: The footer uses 4rem (var(--space-lg)) vertical padding
+     which is proportional on desktop but excessive on mobile.
+     Reduce to 2rem so it doesn't dominate the page bottom. */
+  .footer {
+    padding: var(--space-md) 0;
+  }
+
+  /* FIX: Reduce footer inner horizontal padding to match
+     the section padding reduction on mobile */
+  .footer__inner {
+    padding: 0 var(--space-sm);
+  }
+
   .footer__top,
   .footer__bottom {
     flex-direction: column;
     align-items: center;
     text-align: center;
+  }
+
+  /* FIX: The nav links use a 2rem gap. When they wrap on mobile
+     they spread too far apart. Reduce to 1rem. */
+  .footer__nav {
+    gap: var(--space-sm);
+    justify-content: center;
+  }
+
+  /* FIX: Reduce the divider vertical margin on mobile */
+  .footer__divider {
+    margin: var(--space-sm) 0;
+  }
+
+  /* FIX: Reduce bottom row gap on mobile */
+  .footer__bottom {
+    gap: var(--space-xs);
+  }
+}
+
+/* FIX: On very small screens, reduce footer padding further */
+@media (max-width: 480px) {
+  .footer {
+    padding: 1.5rem 0;
+  }
+
+  .footer__logo {
+    font-size: 1.2rem;
+  }
+
+  .footer__nav {
+    gap: 0.6rem;
   }
 }

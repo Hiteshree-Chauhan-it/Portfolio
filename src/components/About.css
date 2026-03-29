@@ -99,4 +99,45 @@
   .about__stats {
     order: -1;
   }
+
+  /* FIX: At 768px, the stats are now full-width stacked.
+     2-column grid is fine here — but 2rem inside each card
+     is too much. Reduce to 1rem so the value + label
+     have comfortable room without excessive whitespace. */
+  .about__stat-card {
+    padding: var(--space-sm);
+  }
+
+  /* FIX: Scale down the stat value slightly on mobile
+     so it doesn't feel oversized in the smaller card */
+  .about__stat-value {
+    font-size: 1.8rem;
+  }
+}
+
+/* FIX: On very small screens, give each pill full width
+   so they stack cleanly instead of awkwardly wrapping mid-text */
+@media (max-width: 480px) {
+  .about__contact-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .about__pill {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  /* FIX: Reduce stat gap on tiny screens */
+  .about__stats {
+    gap: 0.5rem;
+  }
+
+  .about__stat-card {
+    padding: 0.75rem;
+  }
+
+  .about__stat-value {
+    font-size: 1.6rem;
+  }
 }

@@ -71,6 +71,9 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--navbar-height);
+  /* FIX: prevents any absolutely/fixed positioned element from
+     creating a horizontal scrollbar on mobile */
+  overflow-x: hidden;
 }
 
 body {
@@ -81,6 +84,8 @@ body {
   font-size: 1rem;
   transition: background-color var(--transition), color var(--transition);
   -webkit-font-smoothing: antialiased;
+  /* FIX: clips any element that accidentally overflows the viewport width */
+  overflow-x: hidden;
 }
 
 img {
@@ -112,6 +117,9 @@ button {
 .section__inner {
   max-width: 1100px;
   margin: 0 auto;
+  /* FIX: ensures the inner wrapper never exceeds its parent's width,
+     preventing hidden content or horizontal scroll from child elements */
+  width: 100%;
 }
 
 /* Section heading block used in every section */
@@ -206,5 +214,20 @@ button {
 @media (max-width: 768px) {
   .section {
     padding: var(--space-md) var(--space-sm);
+  }
+}
+
+/* FIX: On very small screens reduce section side padding slightly
+   so content has more room without touching screen edges */
+@media (max-width: 480px) {
+  .section {
+    padding: var(--space-md) 0.75rem;
+  }
+
+  /* FIX: Reduce the section title minimum size on tiny screens
+     so it doesn't break into awkward line lengths */
+  .section__title {
+    font-size: clamp(1.75rem, 7vw, 3rem);
+    margin-bottom: var(--space-sm);
   }
 }

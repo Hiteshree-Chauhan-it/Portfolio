@@ -100,5 +100,49 @@
 @media (max-width: 768px) {
   .projects__grid {
     grid-template-columns: 1fr;
+    /* FIX: The 4rem gap between stacked cards on mobile is excessive.
+       Reduce to 1.5rem so cards feel grouped, not scattered. */
+    gap: 1.5rem;
+    /* FIX: 4rem top margin wastes too much space above the grid
+       on mobile. Reduce to match the section's body rhythm. */
+    margin-top: var(--space-md);
+  }
+
+  /* FIX: The 2rem body padding inside each card is too generous
+     on mobile. The card body is now narrower (full viewport width
+     minus section padding), so reduce to 1.25rem. */
+  .project-card__body {
+    padding: 1.25rem;
+  }
+
+  /* FIX: Same reasoning — reduce the links footer padding
+     so it feels proportional to the reduced body padding. */
+  .project-card__links {
+    padding: 0.9rem 1.25rem;
+    gap: 0.6rem;
+  }
+
+  /* FIX: Reduce the "more projects" top margin on mobile */
+  .projects__more {
+    margin-top: var(--space-md);
+  }
+}
+
+/* FIX: On very small screens, tighten card padding further
+   and make the link buttons smaller so they both fit in one row */
+@media (max-width: 480px) {
+  .project-card__body {
+    padding: var(--space-sm);
+  }
+
+  .project-card__links {
+    padding: 0.75rem var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  /* Slightly reduce the link buttons so they fit side-by-side */
+  .project-card__links .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
   }
 }

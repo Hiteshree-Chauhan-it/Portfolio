@@ -111,7 +111,7 @@
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--space-sm) var(--space-sm);
+  padding: var(--space-sm);
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -241,6 +241,9 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  /* FIX: Allow the form to wrap on very small screens
+     so the input and button don't overflow sideways */
+  flex-wrap: wrap;
 }
 
 /* Wrapper for the "@" prefix + input */
@@ -428,10 +431,10 @@
 /* LeetCode amber variant */
 .ca-heatmap--leetcode {
   --hm-0: #d1d5db;
---hm-1: #fcd34d;
---hm-2: #d97706;
---hm-3: #b45309;
---hm-4: #78350f;
+  --hm-1: #fcd34d;
+  --hm-2: #d97706;
+  --hm-3: #b45309;
+  --hm-4: #78350f;
 }
 
 [data-theme="dark"] .ca-heatmap--leetcode {
@@ -767,9 +770,6 @@
 [data-theme="dark"] .ca-rings__bar-fill--medium { background: #f0b050; }
 [data-theme="dark"] .ca-rings__bar-fill--hard   { background: #e57373; }
 
-/* Ring colours in SVG (applied as fill/stroke via component) */
-/* These are referenced as JS constants in DifficultyRings.jsx */
-
 /* Skeleton state for rings */
 .ca-rings__skeleton {
   display: flex;
@@ -824,20 +824,73 @@
    RESPONSIVE BREAKPOINTS
    ────────────────────────────────────────── */
 
+/* ---- 900px: 4-col stats → 2-col ---- */
 @media (max-width: 900px) {
   .ca-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+/* ---- 768px: tablet / large phone ---- */
+@media (max-width: 768px) {
+  /* FIX: Reduce card inner padding from 2rem to 1rem.
+     The card is now full viewport width minus section padding.
+     2rem inside leaves almost no room for the heatmap or rings. */
+  .ca-card__inner {
+    padding: var(--space-sm);
+  }
+
+  /* FIX: Reduce bottom margin on cards so they don't stack
+     with too much whitespace between them on mobile */
+  .ca-card {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* FIX: Reduce the panel header gap and margin on mobile */
+  .ca-panel__header {
+    margin-bottom: var(--space-sm);
+  }
+
+  /* FIX: Stack the rings row vertically with a tighter gap
+     on tablet widths where they would otherwise be cramped */
+  .ca-rings__row {
+    gap: var(--space-sm);
+  }
+
+  /* FIX: Ensure the bars grid doesn't overflow card bounds */
+  .ca-rings__bars {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* ---- 640px: small phone ---- */
 @media (max-width: 640px) {
   .ca-section__header {
     flex-direction: column;
     align-items: flex-start;
   }
 
+  /* FIX: 2-column stat grid is fine here, but reduce value size
+     slightly so the numbers don't overflow narrow cards */
   .ca-stats-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .ca-stat-card__value {
+    font-size: 1.5rem;
+  }
+
+  .ca-stat-card__label {
+    font-size: 0.68rem;
+  }
+
+  /* FIX: Username input form — on small phones the 170px input
+     + gap + button can total ~260px which overflows the header.
+     Allow the input to shrink to fill available space. */
+  .ca-username__input {
+    width: 140px;
   }
 
   .ca-rings__row {
@@ -849,7 +902,69 @@
     width: 100%;
   }
 
+  /* FIX: Reduce the gap in rings column layout */
+  .ca-rings {
+    gap: var(--space-sm);
+  }
+
+  /* FIX: Reduce rings skeleton gap on small screens */
+  .ca-rings__skeleton {
+    gap: var(--space-sm);
+  }
+
+  /* FIX: Hide date labels under bar chart on very small screens
+     since they become unreadable at 9px in a narrow column */
   .ca-bars__date {
-    display: none; /* hide tiny date labels on very small screens */
+    display: none;
+  }
+}
+
+/* ---- 480px: very small phones (iPhone SE etc.) ---- */
+@media (max-width: 480px) {
+  /* FIX: Reduce card inner padding further */
+  .ca-card__inner {
+    padding: 0.75rem;
+  }
+
+  /* FIX: On very small screens allow the username input
+     to take full width and the button to sit below it */
+  .ca-username__form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ca-username__field {
+    width: 100%;
+  }
+
+  .ca-username__input {
+    width: 100%;
+  }
+
+  .ca-username__btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* FIX: Stat grid goes to single column on the smallest screens
+     so each card can fully display without cramping */
+  .ca-stats-grid {
+    grid-template-columns: 1fr 1fr; /* keep 2-col but further reduce */
+    gap: 0.4rem;
+  }
+
+  .ca-stat-card {
+    padding: 0.6rem;
+  }
+
+  .ca-stat-card__value {
+    font-size: 1.35rem;
+  }
+
+  /* FIX: Tab buttons on very small screens */
+  .ca-tab {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
   }
 }

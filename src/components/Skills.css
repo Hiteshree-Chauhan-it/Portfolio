@@ -88,5 +88,22 @@
 @media (max-width: 640px) {
   .skills__grid {
     grid-template-columns: 1fr;
+    /* FIX: The column gap (var(--space-lg)=4rem) only applied to
+       the horizontal axis. Now single-column, just set a uniform gap. */
+    gap: var(--space-md);
+  }
+}
+
+/* FIX: On very small screens reduce tab button padding so
+   all tab buttons can comfortably sit on the same row
+   without wrapping to a second line unnecessarily */
+@media (max-width: 480px) {
+  .skills__tab {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+  }
+
+  .skills__tabs {
+    gap: 0.4rem;
   }
 }

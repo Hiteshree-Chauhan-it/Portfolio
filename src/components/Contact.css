@@ -89,6 +89,8 @@
   font-size: 0.9rem;
   color: var(--color-text);
   transition: border-color var(--transition), box-shadow var(--transition);
+  /* FIX: ensure inputs never exceed their container on mobile */
+  width: 100%;
 }
 
 .contact__input:focus {
@@ -127,5 +129,51 @@
 @media (max-width: 768px) {
   .contact__grid {
     grid-template-columns: 1fr;
+    /* FIX: Reduce grid gap from 4rem to 2rem on mobile */
+    gap: var(--space-md);
+  }
+
+  /* FIX: The 2rem padding inside each info card is too much
+     when the card spans the full mobile width. The icon and
+     text need less breathing room when stacked vertically.
+     Reduce to 1rem. */
+  .contact__info-card {
+    padding: var(--space-sm);
+    gap: 0.75rem;
+  }
+
+  /* FIX: Reduce the gap between info cards from 1rem to 0.6rem */
+  .contact__info-list {
+    gap: 0.6rem;
+  }
+
+  /* FIX: The success state has 4rem padding on all sides.
+     On mobile single-column, reduce to 2rem so it doesn't
+     swallow the entire viewport height. */
+  .contact__success {
+    padding: var(--space-md);
+  }
+}
+
+/* FIX: On very small screens, tighten card padding further
+   and reduce the intro margin */
+@media (max-width: 480px) {
+  .contact__intro {
+    margin-bottom: var(--space-sm);
+    font-size: 0.95rem;
+  }
+
+  .contact__info-card {
+    padding: 0.75rem;
+  }
+
+  .contact__info-icon {
+    font-size: 1.1rem;
+  }
+
+  .contact__info-value {
+    font-size: 0.875rem;
+    /* FIX: Long email addresses can overflow on tiny screens */
+    word-break: break-all;
   }
 }
