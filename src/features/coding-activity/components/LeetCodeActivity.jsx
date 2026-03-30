@@ -1,71 +1,29 @@
 // ============================================================
 // components/LeetCodeActivity.jsx
-// LeetCode panel showing:
-//   • Username input
-//   • 4 stat cards (total, rank, acceptance, contributions)
-//   • Difficulty rings + horizontal bar breakdown
-//   • Submission calendar heatmap (amber, always mock)
+// LeetCode panel — displays the official leetcard stats card
+// (which includes the heatmap) and links to the real profile.
+//
+// No data-fetching needed: the card is a self-contained SVG
+// served by leetcard.jacoblin.cool and always up-to-date.
 // ============================================================
 
 import React from "react";
-import { useLeetCodeData } from "../hooks/useLeetCodeData";
-import DifficultyRings from "./DifficultyRings";
-import ContributionHeatmap from "./ContributionHeatmap";
-import StatCard from "./StatCard";
-import UsernameInput from "./UsernameInput";
 
-function fmt(n) {
-  if (n == null) return "—";
-  return Number(n).toLocaleString();
-}
+const USERNAME    = "Hiteshree_chauhan_it";
+const PROFILE_URL = `https://leetcode.com/${USERNAME}/`;
 
-function fmtRate(rate) {
-  if (rate == null) return "—";
-  return `${Number(rate).toFixed(1)}%`;
-}
+// The card auto-updates; theme=light keeps it readable in both
+// site themes since the SVG has its own white background.
+const CARD_URL =
+  `https://leetcard.jacoblin.cool/${USERNAME}?theme=light&font=Inter&ext=heatmap`;
 
 export default function LeetCodeActivity() {
-  const {
-    username,
-    setUsername,
-    stats,
-    calendarMap,
-    loading,
-    error,
-    usingMock,
-  } = useLeetCodeData();
-
-  // Horizontal breakdown bars config
-  const breakdownRows = stats
-    ? [
-        {
-          key: "easy",
-          label: "Easy",
-          solved: stats.easySolved,
-          total: stats.totalEasy,
-        },
-        {
-          key: "medium",
-          label: "Medium",
-          solved: stats.mediumSolved,
-          total: stats.totalMedium,
-        },
-        {
-          key: "hard",
-          label: "Hard",
-          solved: stats.hardSolved,
-          total: stats.totalHard,
-        },
-      ]
-    : [];
-
   return (
     <div>
       {/* ── Panel header ── */}
       <div className="ca-panel__header">
         <div className="ca-panel__title-group">
           <div className="ca-panel__icon-title">
-            {/* LeetCode bracket icon */}
             <span
               style={{
                 fontFamily: "var(--font-display)",
@@ -80,96 +38,38 @@ export default function LeetCodeActivity() {
             <h3 className="ca-panel__title">LeetCode Activity</h3>
           </div>
           <p className="ca-panel__desc">
-            My problem solving stats on LeetCode.
+            My problem-solving stats on LeetCode.
           </p>
         </div>
-
       </div>
 
-      {/* ── Stat cards ── */}
-      <div className="ca-stats-grid">
-        <StatCard
-          icon="✅"
-          value={loading || !stats ? "" : fmt(stats.totalSolved)}
-          label="Problems Solved"
-          subtitle={stats ? `of ${fmt(stats.totalQuestions)} total` : undefined}
-          accent="orange"
-          loading={loading || !stats}
-        />
-        <StatCard
-          icon="🏆"
-          value={loading || !stats ? "" : `#${fmt(stats.ranking)}`}
-          label="Global Rank"
-          accent="yellow"
-          loading={loading || !stats}
-        />
-      </div>
-
-      {/* ── Difficulty breakdown card ── */}
+      {/* ── Stats card (leetcard embed) ── */}
       <div className="ca-card">
-        <div className="ca-card__inner">
-          <div className="ca-card__head">
-            <span className="ca-card__heading">Difficulty Breakdown</span>
-          </div>
-
-          <div className="ca-rings">
-            {/* Rings + bar chart side by side */}
-            <div className="ca-rings__row">
-              {/* SVG rings */}
-              <DifficultyRings
-                easySolved={stats?.easySolved ?? 0}
-                totalEasy={stats?.totalEasy ?? 0}
-                mediumSolved={stats?.mediumSolved ?? 0}
-                totalMedium={stats?.totalMedium ?? 0}
-                hardSolved={stats?.hardSolved ?? 0}
-                totalHard={stats?.totalHard ?? 0}
-                loading={loading || !stats}
-              />
-
-              {/* Horizontal progress bars */}
-              {stats && !loading && (
-                <div className="ca-rings__bars">
-                  {breakdownRows.map(({ key, label, solved, total }) => {
-                    const pct = total > 0 ? (solved / total) * 100 : 0;
-                    return (
-                      <div key={key} className="ca-rings__bar-row">
-                        <div className="ca-rings__bar-head">
-                          <span className="ca-rings__bar-label">{label}</span>
-                          <span className="ca-rings__bar-count">
-                            {solved} / {total}
-                          </span>
-                        </div>
-                        <div className="ca-rings__bar-track">
-                          <div
-                            className={`ca-rings__bar-fill ca-rings__bar-fill--${key}`}
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </div>
+        <div className="ca-card__inner" style={{ padding: "var(--space-sm)" }}>
+          <img
+            src={CARD_URL}
+            alt={`LeetCode stats for ${USERNAME}`}
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "var(--radius-sm)",
+              display: "block",
+            }}
+            loading="lazy"
+          />
         </div>
       </div>
 
-      {/* ── Submission activity heatmap card ── */}
-      <div className="ca-card">
-        <div className="ca-card__inner">
-          <div className="ca-card__head">
-            <span className="ca-card__heading">Submission Activity</span>
-            <span className="ca-card__badge">simulated calendar</span>
-          </div>
-          {calendarMap && Object.keys(calendarMap).length > 0 && (
-            <ContributionHeatmap
-              contributionMap={calendarMap}
-              colorScheme="leetcode"
-              loading={loading}
-            />
-          )}
-        </div>
+      {/* ── Profile link ── */}
+      <div style={{ textAlign: "center", marginBottom: "var(--space-md)" }}>
+        <a
+          href={PROFILE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn--primary"
+        >
+          View My LeetCode Profile →
+        </a>
       </div>
     </div>
   );

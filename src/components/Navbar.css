@@ -90,16 +90,30 @@
   width: 100%;
 }
 
-/* Resume button in desktop nav */
-.navbar__resume {
-  display: none; /* hidden on desktop nav; shown in actions */
-  font-size: 0.85rem;
-  padding: 0.6rem 1.4rem;
+/*
+  Resume button — base sizing shared by both instances.
+  Visibility is controlled by the parent-scoped rules below
+  so there is zero chance of one leaking into the wrong context.
+*/
+.navbar__resume,
+.navbar__resume--desktop {
+  font-size: 0.82rem;
+  padding: 0.42rem 1.1rem;
+  line-height: 1.4;
 }
 
-.navbar__resume--desktop {
-  font-size: 0.85rem;
-  padding: 0.6rem 1.4rem;
+/*
+  DESKTOP: show the resume button only inside .navbar__actions,
+  hide the duplicate that lives inside .navbar__nav.
+  Parent-scoped so specificity beats any single-class rule.
+*/
+.navbar__actions .navbar__resume,
+.navbar__actions .navbar__resume--desktop {
+  display: inline-flex;   /* visible in the top bar on desktop */
+}
+
+.navbar__nav .navbar__resume {
+  display: none;           /* hidden inside slide-down nav on desktop */
 }
 
 /* Right-side actions */
@@ -163,24 +177,31 @@
   z-index: -1;
 }
 
-/* ---- MOBILE ---- */
+/* ---- MOBILE (≤768px) ---- */
 @media (max-width: 768px) {
-  /* FIX: Reduce horizontal padding so logo and hamburger
-     have more breathing room on small screens */
+  /* Tighten the top bar so logo + theme toggle + hamburger sit comfortably */
   .navbar__inner {
     padding: 0 var(--space-sm);
     gap: var(--space-sm);
   }
 
+  /* Show hamburger icon */
   .navbar__hamburger {
     display: flex;
   }
 
-  .navbar__resume--desktop {
+  /*
+    MOBILE: completely hide every resume button from the top bar,
+    regardless of whether it carries .navbar__resume, --desktop, or both.
+    Using the parent .navbar__actions as scope makes this airtight —
+    no specificity war with single-class rules above.
+  */
+  .navbar__actions .navbar__resume,
+  .navbar__actions .navbar__resume--desktop {
     display: none;
   }
 
-  /* Mobile nav: slide down from top */
+  /* Slide-down nav panel */
   .navbar__nav {
     position: fixed;
     top: var(--navbar-height);
@@ -188,15 +209,15 @@
     right: 0;
     flex-direction: column;
     align-items: flex-start;
-    /* FIX: Reduce padding from 2rem to 1.25rem so the menu
-       doesn't feel overly spacious on small screens */
-    padding: 1.25rem var(--space-sm);
+    padding: 1.25rem var(--space-sm) 1.5rem;  /* extra bottom padding for comfort */
     background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
     box-shadow: var(--shadow-md);
     transform: translateY(-110%);
     opacity: 0;
     transition: transform 0.35s ease, opacity 0.35s ease;
+    /* Ensure the panel stacks above page content */
+    z-index: 999;
   }
 
   .navbar__nav--open {
@@ -204,14 +225,27 @@
     opacity: 1;
   }
 
-  .navbar__resume {
-    display: inline-flex;
-    margin-top: var(--space-xs);
+  /* Tap-friendly nav links */
+  .navbar__link {
+    padding: 0.45rem 0;
+    font-size: 1rem;
+    width: 100%;          /* full-width tap target */
   }
 
-  /* FIX: Give nav links more tap-friendly vertical spacing on mobile */
-  .navbar__link {
-    padding: 0.4rem 0;
-    font-size: 1rem;
+  /*
+    Resume button inside the hamburger panel.
+    Separated from the nav links by a subtle top border acting
+    as a divider — no extra HTML element needed.
+  */
+  .navbar__nav .navbar__resume {
+    display: inline-flex;
+    align-items: center;
+    margin-top: var(--space-sm);      /* breathing room below the last link */
+    padding-top: var(--space-sm);     /* space above the divider line */
+    border-top: 1px solid var(--color-border); /* visual separator */
+    width: 100%;                      /* full-width so the border spans the panel */
+    font-size: 0.9rem;
+    padding-left: 0;                  /* align left with the nav links */
+    padding-right: 0;
   }
 }
