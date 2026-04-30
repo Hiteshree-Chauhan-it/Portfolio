@@ -73,12 +73,12 @@ function Projects() {
               Want to see more? All my projects are on GitHub.
             </p>
             <a
-              href="https://github.com/alexjohnson"
+              href="https://github.com/Hiteshree-Chauhan-it"
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn--outline"
             >
-              View All on GitHub ↗
+              View All on GitHub ↗ 
             </a>
           </div>
         </div>
